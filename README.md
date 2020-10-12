@@ -25,7 +25,7 @@ git@github.com:Pierre-damase/Alignement-seq-reads.git
 Exécuter la commande
 
 ```
-python -m <REF>.fasta <READS>.fasta
+python -m bwt <REF>.fasta <READS>.fasta
 ```
 
 - Aguments obligatoires
