@@ -223,12 +223,15 @@ def afficher_alignement(ref, read, positions, bornes):
     ------
     alignement: str
         l'alignement du reads avec la séquence de référence
+    matches: int
+        le nombre de matches
     """
     # Déterminer les positions de départ de chaque motifs dans la séquence
     start_motif = []
     for i in range(bornes[0], bornes[1]+1):
         start_motif.append(positions[i]+1)
     start_motif.sort()
+    matches = len(start_motif)
 
     alignements = ""
     index, tmp = 0, 0
@@ -247,7 +250,7 @@ def afficher_alignement(ref, read, positions, bornes):
             alignements += "."
             index += 1
 
-    return alignements
+    return alignements, matches
 
 
 

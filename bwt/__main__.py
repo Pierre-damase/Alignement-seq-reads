@@ -50,8 +50,10 @@ def main():
     # L'alignement des reads avec la séquence de référence
     for id_read, read in reads.items():
         bornes = bwt.map(read, inferieurs, tally)
-        alignement = bwt.afficher_alignement(reference, read, positions, bornes)
+        alignement, matches = bwt.afficher_alignement(reference, read,
+                                                      positions, bornes)
 
+        print("Alignement - {} match.es".format(matches))
         print("Sequence: {}".format(reference))
         print("   Reads: {}".format(alignement), end="\n\n")
 
