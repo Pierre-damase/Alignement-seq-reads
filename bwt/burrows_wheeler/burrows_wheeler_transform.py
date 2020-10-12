@@ -189,17 +189,19 @@ def map(read, inferieurs, tally):
 
     Return
     ------
-    b:
-    e:
+    borne_inf: int
+        borne inféreur du vecteur positions
+    borne_supp: int
+        borne supérieur du vecteur positions
     """
     i = len(read) - 1
-    b = inferieurs[read[i]]
-    e = inferieurs[read[i]] + tally[-1][read[i]] - 1
-    while i >= 1 and b <= e:
+    borne_inf = inferieurs[read[i]]
+    borne_supp = inferieurs[read[i]] + tally[-1][read[i]] - 1
+    while i >= 1 and borne_inf <= borne_supp:
         i -= 1
-        b = inferieurs[read[i]] + tally[b-1][read[i]]
-        e = inferieurs[read[i]] + tally[e][read[i]] - 1
-    return b, e
+        borne_inf = inferieurs[read[i]] + tally[borne_inf-1][read[i]]
+        borne_supp = inferieurs[read[i]] + tally[borne_supp][read[i]] - 1
+    return borne_inf, borne_supp
 
 
 if __name__ == "__main__":
