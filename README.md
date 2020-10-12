@@ -11,13 +11,13 @@ Utilisation de la transformée de burrows-wheeler.
 > Lien HTTPS
 
 ```
-https://github.com/Pierre-damase/Alignement-seq-reads.git
+git clone https://github.com/Pierre-damase/Alignement-seq-reads.git
 ```
 
 > Lien SSH
 
 ```
-git@github.com:Pierre-damase/Alignement-seq-reads.git
+git clone git@github.com:Pierre-damase/Alignement-seq-reads.git
 ```
 
 ## Exécuter le programme
