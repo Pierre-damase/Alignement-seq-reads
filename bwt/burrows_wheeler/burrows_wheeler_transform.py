@@ -204,5 +204,52 @@ def map(read, inferieurs, tally):
     return borne_inf, borne_supp
 
 
+def afficher_alignement(ref, read, positions, bornes):
+    """
+    Renvoie l'alignement d'un read donné avec la séquence de référence.
+
+    Parameter
+    ---------
+    ref: str
+        la séquence de référence
+    read: str
+        le read à aligner
+    positions: list
+        liste des positions
+    bornes: tuple
+        les bornes du vecteur positions
+
+    Return
+    ------
+    alignement: str
+        l'alignement du reads avec la séquence de référence
+    """
+    # Déterminer les positions de départ de chaque motifs dans la séquence
+    start_motif = []
+    for i in range(bornes[0], bornes[1]+1):
+        start_motif.append(positions[i]+1)
+    start_motif.sort()
+
+    alignements = ""
+    index, tmp = 0, 0
+
+    # Déterminer l'alignement
+    while index < len(ref):
+        try:
+            start_motif[tmp]
+        except:
+            tmp -= 1
+        if index == start_motif[tmp]:
+            alignements += read
+            index += len(read)
+            tmp += 1
+        else:
+            alignements += "."
+            index += 1
+
+    return alignements
+
+
+
 if __name__ == "__main__":
     sys.exit()  # aucune action souhaitée

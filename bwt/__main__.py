@@ -48,9 +48,12 @@ def main():
     positions = bwt.generer_position(transformee, inferieurs, ranks)
 
     # L'alignement des reads avec la séquence de référence
-    bornes = {}
     for id_read, read in reads.items():
-        bornes[id_read] = bwt.map(read, inferieurs, tally)
+        bornes = bwt.map(read, inferieurs, tally)
+        alignement = bwt.afficher_alignement(reference, read, positions, bornes)
+
+        print("Sequence: {}".format(reference))
+        print("   Reads: {}".format(alignement), end="\n\n")
 
 
 if __name__ == "__main__":
