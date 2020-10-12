@@ -40,7 +40,7 @@ def arguments():
     """
     parser = argparse.ArgumentParser()
 
-    # Argument nécessaire
+    # Arguments nécessaires
     group = parser.add_argument_group('fasta', "les .fasta pour l'analyse")
     group.add_argument(
         'ref', type=lambda x: valide_file(parser, x),
@@ -57,4 +57,4 @@ def arguments():
 
 
 if __name__ == "__main__":
-    sys.exit()  # aucune action souhaité
+    sys.exit()  # aucune action souhaitée
