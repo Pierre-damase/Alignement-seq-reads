@@ -53,7 +53,7 @@ def read_reads(fasta):
         reads = {}
         for line in filin:
             if line.startswith('>'):
-                reads_id = line.split('|')[0].split('>')[1]  # extraire l'id
+                reads_id = line.split('.')[0].split('>')[1]  # extraire l'id
                 reads[reads_id] = ""
             else:
                 reads[reads_id] += line.strip()

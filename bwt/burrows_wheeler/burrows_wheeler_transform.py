@@ -204,9 +204,11 @@ def map(read, inferieurs, tally):
     return borne_inf, borne_supp
 
 
-def afficher_alignement(ref, read, positions, bornes):
+def determiner_alignement(ref, read, positions, bornes):
     """
     Renvoie l'alignement d'un read donné avec la séquence de référence.
+
+    méthode a eviter sur les sequences de taille importante.
 
     Parameter
     ---------
@@ -233,25 +235,42 @@ def afficher_alignement(ref, read, positions, bornes):
     start_motif.sort()
     matches = len(start_motif)
 
-    alignements = ""
-    index, tmp = 0, 0
-
     # Déterminer l'alignement
-    while index < len(ref):
-        try:
-            start_motif[tmp]
-        except:
-            tmp -= 1
-        if index == start_motif[tmp]:
-            alignements += read
-            index += len(read)
-            tmp += 1
-        else:
-            alignements += "."
-            index += 1
+    alignement = "." * len(ref)
+    for pos in start_motif:
+        alignement = alignement[:pos] + read + alignement[pos+len(read):]
 
-    return alignements, matches
+    return alignement, matches
 
+
+def determiner_positions(positions, bornes):
+    """
+    Détermine pour chaque read le nombre de matches.
+
+    Ainsi que les positions de départ de chaque match.
+
+    Parameter
+    ---------
+    positions: list
+        liste des positions
+    bornes: tuple
+        les bornes du vecteur positions
+
+    Return
+    ------
+    start_motif: list
+        les positions de départ de chaque read dans la séquence
+    matches: int
+        le nombre d'alignement trouvé
+    """
+    # Déterminer les positions de départ de chaque motifs dans la séquence
+    start_motif = []
+    for i in range(bornes[0], bornes[1]+1):
+        start_motif.append(positions[i]+1)
+    start_motif.sort()
+    matches = len(start_motif)
+
+    return start_motif, matches
 
 
 if __name__ == "__main__":

@@ -16,7 +16,8 @@ Usage
 
 from bwt.argument.definir_argument import arguments
 from bwt.burrows_wheeler import burrows_wheeler_transform as bwt
-from bwt.files import fasta_file as fasta
+from bwt.files import read_fasta_files as fasta
+from bwt.files import write_file as save
 
 
 def main():
@@ -33,7 +34,7 @@ def main():
     transformee = bwt.burrows_wheeler_transform(reference)
 
     # La séquence d'origine déterminée à partir de la transformée
-    initial = bwt.inverse_bwt(transformee)
+    # initial = bwt.inverse_bwt(transformee)
 
     # La tally table générée à partir de la transformée
     tally = bwt.tally_table(transformee)
@@ -48,14 +49,14 @@ def main():
     positions = bwt.generer_position(transformee, inferieurs, ranks)
 
     # L'alignement des reads avec la séquence de référence
+    alignements = {}
     for id_read, read in reads.items():
         bornes = bwt.map(read, inferieurs, tally)
-        alignement, matches = bwt.afficher_alignement(reference, read,
-                                                      positions, bornes)
+        pos, matches = bwt.determiner_positions(positions, bornes)
 
-        print("Alignement - {} match.es".format(matches))
-        print("Sequence: {}".format(reference))
-        print("   Reads: {}".format(alignement), end="\n\n")
+        alignements[id_read] = {'Match.es': matches, 'Position.s': pos}
+
+    save.write_fasta(alignements)
 
 
 if __name__ == "__main__":
