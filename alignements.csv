@@ -1,0 +1,7 @@
+Read,Nb match.es,Position.s
+"READ_1|Exemple de read
+",1,[1]
+"READ_2|Exemple de read
+",3,"[1, 3, 6]"
+"READ_3|Exemple de read
+",2,"[0, 2]"
