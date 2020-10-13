@@ -54,7 +54,7 @@ def main():
         bornes = bwt.map(read, inferieurs, tally)
         pos, matches = bwt.determiner_positions(positions, bornes)
 
-        alignements[id_read] = {'Match.es': matches, 'Position.s': pos}
+        alignements[id_read] = {'Matched': matches, 'Positions': pos}
 
     save.write_fasta(alignements)
 
