@@ -40,14 +40,14 @@ def write_fasta(alignements):
           - value: nombre de matches (int) & positions (list)
     """
     with open("alignements.csv", "w") as filout:
-        fields = ["Read", "Nb match.es", "Position.s"]
+        fields = ["Read", "Matched", "Positions"]
         f_writer = csv.DictWriter(filout, fieldnames=fields)
         f_writer.writeheader()
         for read, value in alignements.items():
             data = {
                 "Read": read,
-                "Nb match.es": value['Match.es'],
-                "Position.s": value['Position.s']
+                "Matched": value['Matched'],
+                "Positions": value['Positions']
             }
             f_writer.writerow(data)
 

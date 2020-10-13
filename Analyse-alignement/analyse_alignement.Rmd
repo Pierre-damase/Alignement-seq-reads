@@ -1,0 +1,70 @@
+---
+title: "Analyse des alignements obtenus"
+author: "IMBERT Pierre & PERAD Esthel"
+date: "`r format(Sys.time(), '%d/%m/%y')`"
+output:
+  bookdown::html_document2:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+    #toc_float: 
+    #  collapsed: true
+    theme: default # “default”, “cerulean”, “united”, “cosmo”
+    fig_caption: true
+header-includes:
+  \usepackage{float}
+editor_options:
+  chunk_output_type: console
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, include=FALSE, cache=TRUE, fig.align="center", fig.show="asis", fig.pos="H")
+```
+
+```{r library, message=FALSE, warning=FALSE}
+library(MASS)
+```
+
+# Load data
+
+```{r}
+pos = read.csv("../alignements.csv", header = T, sep = ",")
+```
+
+# Proportion alignés - non alignés
+
+```{r}
+proportion = pos$Matched > 0
+prop.table(table(proportion))
+```
+
+Seulement 33% des séquences ce sont alignées avec la séquence de référence.
+
+# Affichage graphque
+
+- Avec les alignés - non alignés
+
+```{r}
+truehist(pos$Matched)
+```
+
+Prendre en compte les reads non alignés est mauvais -> polution des données.
+
+- Sans les non alignés
+
+```{r}
+pos_mapped = pos[pos$Matched > 0,]
+truehist(pos_mapped$Matched, breaks = 1e2)
+```
+
+
+```{r}
+truehist(pos_mapped$Matched, breaks = 1e3)
+```
+
+Pas de read à une position donnée donc indique une délétion.
