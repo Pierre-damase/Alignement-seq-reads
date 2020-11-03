@@ -14,6 +14,9 @@ Usage
     ps: être dans le dossier génomique
 """
 
+import sys
+import time
+
 from bwt.argument.definir_argument import arguments
 from bwt.burrows_wheeler import burrows_wheeler_transform as bwt
 from bwt.files import read_fasta_files as fasta
@@ -21,6 +24,7 @@ from bwt.files import write_file as save
 
 
 def main():
+    start_time = time.time()
     # Définition des arguments du programme
     ref, reads = arguments()
 
@@ -32,6 +36,7 @@ def main():
 
     # La transformée de burrows-wheeler
     transformee = bwt.burrows_wheeler_transform(reference)
+    #transformee_bis = bwt.bwt_amelioration(reference)
 
     # La séquence d'origine déterminée à partir de la transformée
     # initial = bwt.inverse_bwt(transformee)
