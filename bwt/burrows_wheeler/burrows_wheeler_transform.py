@@ -4,6 +4,7 @@ Algorithme de burrows-wheeler.
 
 from collections import Counter
 import copy
+import numpy as np
 import sys
 
 
@@ -271,6 +272,38 @@ def determiner_positions(positions, bornes):
     matches = len(start_motif)
 
     return start_motif, matches
+
+
+def bwt_amelioration(seq):
+    """
+    Cette méthode permet d'appliquer l'algorithme de burrows-wheeter tansform.
+
+    Ici, une première approche pour améliorer l'algorithme est mise en place.
+
+    Parameter
+    ---------
+    seq: str
+        la séquence de référence
+
+    Return
+    ------
+    bwt: str
+        la séquence extraite, i.e la transformé de burrows-wheeler
+    """
+    # Générer la matrice de permutations simplifiée
+    permutations, last_element = ["$"], ""
+    for i in range(len(seq)):
+        last_element += seq[-(i+1)]
+        permutations.append(seq[-(i+1):] + "$")
+    last_element += "$"
+
+    # Générer la transformée
+    sort_permutation = np.argsort(permutations)
+    bwt = [""] * len(permutations)
+    for i in range(len(bwt)):
+        bwt[i] = last_element[sort_permutation[i]]
+
+    return "".join(bwt)
 
 
 if __name__ == "__main__":
