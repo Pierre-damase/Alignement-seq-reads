@@ -15,7 +15,6 @@ Usage
 """
 
 import sys
-import time
 
 from bwt.argument.definir_argument import arguments
 from bwt.burrows_wheeler import burrows_wheeler_transform as bwt
@@ -23,20 +22,12 @@ from bwt.files import read_fasta_files as fasta
 from bwt.files import write_file as save
 
 
-def main():
-    start_time = time.time()
-    # Définition des arguments du programme
-    ref, reads = arguments()
-
-    # Lecture des fichiers fasta
-    reference = fasta.read_reference(ref)
-    reads = fasta.read_reads(reads)
-
+def generer_bwt(reference):
     ## Burrows-wheeler transform ##
 
     # La transformée de burrows-wheeler
-    transformee = bwt.burrows_wheeler_transform(reference)
-    #transformee_bis = bwt.bwt_amelioration(reference)
+    # transformee = bwt.burrows_wheeler_transform(reference)
+    transformee = bwt.bwt_space_efficient(reference)
 
     # La séquence d'origine déterminée à partir de la transformée
     # initial = bwt.inverse_bwt(transformee)
@@ -53,13 +44,55 @@ def main():
     # La position des nucléotides de la transformée dans la séquence d'origine
     positions = bwt.generer_position(transformee, inferieurs, ranks)
 
+    return tally, inferieurs, positions
+
+
+def generer_alignements(alignements, reference, reads):
     # L'alignement des reads avec la séquence de référence
-    alignements = {}
+
+    tally, inferieurs, positions = generer_bwt(reference)
+
     for id_read, read in reads.items():
+        print("\rRead {}".format(id_read), end="")
         bornes = bwt.map(read, inferieurs, tally)
         pos, matches = bwt.determiner_positions(positions, bornes)
 
-        alignements[id_read] = {'Matched': matches, 'Positions': pos}
+        if not id_read in alignements.keys():
+            alignements[id_read] = {'Matched': 0, 'Positions': []}
+
+        alignements[id_read]['Matched'] += matches
+        alignements[id_read]['Positions'].extend(pos)
+
+    print("\nAlignements over\n")
+
+    return alignements
+
+
+def inverse_seq(seq):
+    seq_inverse = ""
+    dico = {'A': "T", 'T': "A", 'C': "G", 'G': "C"}
+
+    for nucleotide in seq:
+        seq_inverse += dico[nucleotide]
+
+    return seq_inverse
+
+
+def main():
+    # Définition des arguments du programme
+    ref, reads = arguments()
+
+    # Lecture des fichiers fasta
+    reference = fasta.read_reference(ref)
+    reads = fasta.read_reads(reads)
+
+    # Séquence inverse
+    reference_inverse = inverse_seq(reference)
+
+    # Alignements
+    alignements = {}
+    alignements = generer_alignements(alignements, reference, reads)
+    alignements = generer_alignements(alignements, reference_inverse, reads)
 
     save.write_fasta(alignements)
 

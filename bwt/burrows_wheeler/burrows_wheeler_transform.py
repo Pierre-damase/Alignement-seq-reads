@@ -4,7 +4,6 @@ Algorithme de burrows-wheeler.
 
 from collections import Counter
 import copy
-import numpy as np
 import sys
 
 
@@ -274,11 +273,39 @@ def determiner_positions(positions, bornes):
     return start_motif, matches
 
 
-def bwt_amelioration(seq):
+def find_all(nucleotide, seq):
+    """
+    Générateur qui renvoie l'index de chaque nucleotide donné dans la séquence.
+
+    Parameter
+    ---------
+    seq: str
+        la séquence de référence
+    """
+    index = seq.find(nucleotide)
+    while index != -1:
+        yield index
+        index = seq.find(nucleotide, index+1)
+
+
+def compare(pos1, pos2, seq):
+    """
+
+    """
+    cpt = 1
+    while cpt < len(seq):
+        #print("{} & {}".format(seq[pos1:pos1+cpt], seq[pos2:pos2+cpt]))
+        if seq[pos1:pos1+cpt] == seq[pos2:pos2+cpt]:
+            cpt += 1
+        elif seq[pos1:pos1+cpt] > seq[pos2:pos2+cpt]:
+            return False
+        else:
+            return True
+
+
+def bwt_space_efficient(seq):
     """
     Cette méthode permet d'appliquer l'algorithme de burrows-wheeter tansform.
-
-    Ici, une première approche pour améliorer l'algorithme est mise en place.
 
     Parameter
     ---------
@@ -290,20 +317,30 @@ def bwt_amelioration(seq):
     bwt: str
         la séquence extraite, i.e la transformé de burrows-wheeler
     """
-    # Générer la matrice de permutations simplifiée
-    permutations, last_element = ["$"], ""
-    for i in range(len(seq)):
-        last_element += seq[-(i+1)]
-        permutations.append(seq[-(i+1):] + "$")
-    last_element += "$"
+    seq = "$" + copy.deepcopy(seq)
+    dico = {'A': [], 'C': [], 'G': [], 'T': []}
+
+    for nucleotide in dico:
+        print("\rTraitement {}".format(nucleotide), end="")
+        for pos in find_all(nucleotide, seq):
+            if not dico[nucleotide]:
+                dico[nucleotide].append(pos)
+            else:
+                # Comparer chaque nucleotide donné entre eux
+                cpt = 0
+                while cpt < len(dico[nucleotide]) and compare(dico[nucleotide][cpt], pos, seq):
+                    cpt += 1
+                dico[nucleotide].insert(cpt, pos)
 
     # Générer la transformée
-    sort_permutation = np.argsort(permutations)
-    bwt = [""] * len(permutations)
-    for i in range(len(bwt)):
-        bwt[i] = last_element[sort_permutation[i]]
+    bwt = seq[-1]
+    for value in dico.values():
+        for pos in value:
+            bwt += seq[pos-1]
 
-    return "".join(bwt)
+    print("\rBurrows-wheeler transform over")
+
+    return bwt
 
 
 if __name__ == "__main__":

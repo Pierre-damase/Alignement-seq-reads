@@ -60,5 +60,23 @@ def read_reads(fasta):
     return reads
 
 
+    # with open(fasta, "r") as filin:
+    #     reads = ""
+    #     for line in filin:
+    #         if not line.startswith('>'):
+    #             reads += line.strip()
+    #         else:
+    #             if reads:
+    #                 try:
+    #                     yield (reads_id, reads)
+    #                 except StopIteration:
+    #                     return
+    #             reads_id = line.split('.')[0].split('>')[1]  # extraire l'id
+    #     try:
+    #         yield (reads_id, reads)
+    #     except StopIteration:
+    #         return
+
+
 if __name__ == "__main__":
-    sys.exit()  # Aucune action souhaitée 
+    sys.exit()  # Aucune action souhaitée
