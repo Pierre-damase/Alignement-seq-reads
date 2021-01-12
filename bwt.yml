@@ -1,0 +1,4 @@
+name: bwt
+channels:
+  - defaults
+prefix: /home/damase/miniconda3/envs/bwt
