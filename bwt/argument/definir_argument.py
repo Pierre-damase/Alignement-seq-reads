@@ -12,7 +12,8 @@ def valide_file(parser, fichier):
     """
     Test la validité des fichiers passés en paramètre.
 
-      - format du fichier - .fasta attendu
+      - format du fichier
+      - .fasta attendu
       - fichier présent
 
     Parameter
