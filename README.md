@@ -4,6 +4,8 @@
 
 Utilisation de la transformée de burrows-wheeler.
 
+Le jupyter notebook **cours_burrows-wheeler.ipynb** présente les bases de l'algorithme burrows-wheeler transform ainsi que les différents algorithmes mis en place pour la générer (par matrice ou space efficient) et pour réaliser l'alignement de reads à un génome de référence.
+
 ## Quick start
 
 1. Clone du répertoire github
