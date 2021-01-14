@@ -6,7 +6,7 @@ Le jupyter notebook **cours_burrows-wheeler.ipynb** présente les bases de l'alg
 
 Les fichiers **alignements-classique.csv** & **alignements-space_efficient.csv** renseignent de l'alignement des reads **READSsars_cov_2_1e6.fasta** avec la séquence de référence **Hu-1.fasta**. Fichiers obtenus respectivement avec l'algorithme de burrows-wheeler classique (matrice) et space efficient. 
 
-Les fichiers **Hu-1.fasta** & **READSsars_cov_2_1e6.fasta** du fait de leur taille n'ont pu être déposés sur le github. Pour tester le programme veuiller les déposer dans le ficheir **/data**.
+Les fichiers **Hu-1.fasta** & **READSsars_cov_2_1e6.fasta** du fait de leur taille n'ont pu être déposés sur le github. Pour tester le programme veuiller les déposer dans le fichier **/data**.
 
 ## Quick start
 
