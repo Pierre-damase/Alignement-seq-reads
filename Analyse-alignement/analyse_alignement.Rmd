@@ -33,7 +33,7 @@ library(MASS)
 # Load data
 
 ```{r}
-pos = read.csv("../alignements.csv", header = T, sep = ",")
+pos = read.csv("../alignements-classique.csv", header = T, sep = ",")
 ```
 
 # Proportion alignés - non alignés
@@ -43,7 +43,7 @@ proportion = pos$Matched > 0
 prop.table(table(proportion))
 ```
 
-Seulement 33% des séquences ce sont alignées avec la séquence de référence.
+On remarque que 68% des reads ce sont alignées avec la séquence de référence.
 
 # Affichage graphque
 

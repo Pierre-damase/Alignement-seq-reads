@@ -22,15 +22,33 @@ git clone https://github.com/Pierre-damase/Alignement-seq-reads.git
 git clone git@github.com:Pierre-damase/Alignement-seq-reads.git
 ```
 
+2. Créer l'environnement conda à partir du fichier bwt.yml (recommandé pour le jupyter notebook)
+
+```
+conda env create --file bwt.yml
+```
+
+3. Activer l'environnement conda
+
+```
+conda activate bwt
+```
+
 ## Exécuter le programme
 
-Exécuter la commande
+- Jupyter notebook
 
 ```
-python -m bwt <REF>.fasta <READS>.fasta
+jupyter lab
 ```
 
-- Aguments obligatoires
+- Module bwt
+
+```
+python -m bwt -ref <REF>.fasta -reads <READS>.fasta -bwt <ALGO>
+```
+
+1. Aguments obligatoires
 
 > <REF>.fasta
 
@@ -40,6 +58,12 @@ La séquence de référence au format .fasta
 
 Les reads au format .fasta
 
+2. Agument optionnel
+    
+> <ALGO>
+    
+L'algorithme de la transformée de burrows-wheller, soit classique (matrice) ou space efficient (défaut)
+    
 ## Auteurs
 
 IMBERT Pierre
