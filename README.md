@@ -59,19 +59,19 @@ Réalise l'alignement des reads de READSsars_cov_2_1e6.fasta avec le fichier de 
 python -m bwt -ref <REF>.fasta -reads <READS>.fasta -bwt <ALGO>
 ```
 
-1. Aguments obligatoires
+1. Arguments obligatoires
 
-> <REF>.fasta
+> REF.fasta
 
 La séquence de référence au format .fasta
 
-> <READS>.fasta
+> READS.fasta
 
 Les reads au format .fasta
 
-2. Agument optionnel
+2. Argument optionnel
     
-> <ALGO>
+> ALGO
     
 L'algorithme de la transformée de burrows-wheller, soit classique (matrice) ou space efficient (défaut)
     
