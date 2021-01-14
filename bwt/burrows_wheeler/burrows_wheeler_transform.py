@@ -321,7 +321,7 @@ def bwt_space_efficient(seq):
     dico = {'A': [], 'C': [], 'G': [], 'T': []}
 
     for nucleotide in dico:
-        print("\rTraitement {}".format(nucleotide), end="")
+        print("\rBWT space efficient - Traitement de {}".format(nucleotide), end="")
         for pos in find_all(nucleotide, seq):
             if not dico[nucleotide]:
                 dico[nucleotide].append(pos)

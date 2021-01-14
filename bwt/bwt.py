@@ -16,18 +16,20 @@ Usage
 
 import sys
 
-from bwt.argument.definir_argument import arguments
+from bwt.argument.argument import arguments
 from bwt.burrows_wheeler import burrows_wheeler_transform as bwt
 from bwt.files import read_fasta_files as fasta
 from bwt.files import write_file as save
 
 
-def generer_bwt(reference):
+def generer_bwt(reference, bwt_algo):
     ## Burrows-wheeler transform ##
 
     # La transformée de burrows-wheeler
-    # transformee = bwt.burrows_wheeler_transform(reference)
-    transformee = bwt.bwt_space_efficient(reference)
+    if bwt_algo == "classique":
+        transformee = bwt.burrows_wheeler_transform(reference)
+    else:
+        transformee = bwt.bwt_space_efficient(reference)
 
     # La séquence d'origine déterminée à partir de la transformée
     # initial = bwt.inverse_bwt(transformee)
@@ -47,17 +49,21 @@ def generer_bwt(reference):
     return tally, inferieurs, positions
 
 
-def generer_alignements(alignements, reference, reads):
-    # L'alignement des reads avec la séquence de référence
+def generer_alignements(alignements, reference, reads, bwt_algo):
+    """
+    L'alignement des reads avec la séquence de référence.
 
-    tally, inferieurs, positions = generer_bwt(reference)
+    bwt_algo: renseigne de l'algorithme à appliquer: classique (matrice) ou space efficient
+    """
+
+    tally, inferieurs, positions = generer_bwt(reference, bwt_algo)
 
     for id_read, read in reads.items():
         print("\rRead {}".format(id_read), end="")
         bornes = bwt.map(read, inferieurs, tally)
         pos, matches = bwt.determiner_positions(positions, bornes)
 
-        if not id_read in alignements.keys():
+        if id_read not in alignements.keys():
             alignements[id_read] = {'Matched': 0, 'Positions': []}
 
         alignements[id_read]['Matched'] += matches
@@ -80,21 +86,21 @@ def inverse_seq(seq):
 
 def main():
     # Définition des arguments du programme
-    ref, reads = arguments()
+    args = arguments()
 
     # Lecture des fichiers fasta
-    reference = fasta.read_reference(ref)
-    reads = fasta.read_reads(reads)
+    reference = fasta.read_reference(args.ref)
+    reads = fasta.read_reads(args.reads)
 
     # Séquence inverse
     reference_inverse = inverse_seq(reference)
 
     # Alignements
     alignements = {}
-    alignements = generer_alignements(alignements, reference, reads)
-    alignements = generer_alignements(alignements, reference_inverse, reads)
+    alignements = generer_alignements(alignements, reference, reads, args.bwt)
+    alignements = generer_alignements(alignements, reference_inverse, reads, args.bwt)
 
-    save.write_fasta(alignements)
+    save.write_fasta(alignements, args.bwt)
 
 
 if __name__ == "__main__":

@@ -1,2 +1,3 @@
-# Exlure les fichiers fasta - trop volumineux
-*.fasta
+# Exlure les fichiers fasta trop volumineux
+Hu-1.fasta
+READSsars_cov_2_1e6.fasta

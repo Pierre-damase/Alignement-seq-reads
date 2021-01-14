@@ -11,20 +11,7 @@ import csv
 import sys
 
 
-def write_transforme(transformee):
-    """
-    Sauvegarde la transformée dans un fichier .txt.
-
-    Parameter
-    ---------
-    transformee: str
-        la séquence transformée
-    """
-    with open("transformee.txt", "w") as filout:
-        pass
-
-
-def write_fasta(alignements):
+def write_fasta(alignements, bwt_algo):
     """
     Écrit dans un fichier .csv.
 
@@ -39,7 +26,8 @@ def write_fasta(alignements):
           - clé: l'id de chaque read
           - value: nombre de matches (int) & positions (list)
     """
-    with open("alignements.csv", "w") as filout:
+    fichier = "alignements-{}.csv".format(bwt_algo)
+    with open(fichier, "w") as filout:
         fields = ["Read", "Matched", "Positions"]
         f_writer = csv.DictWriter(filout, fieldnames=fields)
         f_writer.writeheader()
